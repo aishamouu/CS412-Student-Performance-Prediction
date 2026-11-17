@@ -45,3 +45,28 @@ summary = pd.DataFrame({
 })
 print("\nDataset summary table:")
 print(summary.to_string(index=False))
+
+
+# Analyze relationships between lifestyle features and GPA.
+features = [
+    "Study_Hours_Per_Day",
+    "Extracurricular_Hours_Per_Day",
+    "Sleep_Hours_Per_Day",
+    "Social_Hours_Per_Day",
+    "Physical_Activity_Hours_Per_Day",
+]
+
+correlations = (
+    df[features + ["GPA"]]
+    .corr()["GPA"]
+    .drop("GPA")
+    .sort_values(ascending=False)
+)
+
+print("\nCorrelation between lifestyle features and GPA:")
+print(correlations.round(3).to_string())
+
+# Compare average GPA across stress-level categories.
+print("\nAverage GPA by stress level:")
+print(df.groupby("Stress_Level")["GPA"].mean().round(3).to_string())
+
